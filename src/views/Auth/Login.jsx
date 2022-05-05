@@ -19,6 +19,17 @@ export default function Login() {
     event.preventDefault();
     const loginWasSuccessful = auth.login(formState.email, formState.password);
 
+    console.log('path from!!!!', from);
+    console.log('successful???', loginWasSuccessful);
+    console.log('formstate', formState);
+    console.log(
+      'env',
+      `${process.env.AUTH_EMAIL}, ${process.env.AUTH_PASSWORD}`
+    );
+
+    !loginWasSuccessful
+      ? setError('Invalid email/password')
+      : history.replace(from.pathname);
     // TODO: If login was unsuccessful, set an error with a message
     // to display to the user that their login failed.
     //
@@ -37,12 +48,16 @@ export default function Login() {
           id="email"
           name="email"
           type="email"
+          value={formState.email}
+          onChange={handleFormChange}
         />{' '}
         <label>Password</label>
         <input
           id="password"
           name="password"
           type="password"
+          value={formState.password}
+          onChange={handleFormChange}
         />
         <button type="submit" aria-label="Sign In">
           Sign in
